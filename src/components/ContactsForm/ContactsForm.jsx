@@ -9,6 +9,9 @@ export class ContactsForm extends Component {
     number: '',
   };
 
+  nameInputId = nanoid();
+  numberInputId = nanoid();
+
   handleChange = event => {
     const { name, value } = event.currentTarget;
     this.setState({
@@ -20,7 +23,7 @@ export class ContactsForm extends Component {
     event.preventDefault();
     const state = this.state;
     this.props.onSubmit(state);
-    this.reset(event);
+    this.reset();
   };
 
   reset = () => {
@@ -34,30 +37,28 @@ export class ContactsForm extends Component {
     const { name, number } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Label htmlFor={nanoid()}>
+        <Label htmlFor={this.nameInputId}>
           Name
           <Input
-            onChange={this.handleChange}
             type="text"
             name="name"
-            value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            id={nanoid()}
+            value={name}
+            onChange={this.handleChange}
           />
         </Label>
-        <Label htmlFor={nanoid()}>
+        <Label htmlFor={this.numberInputId}>
           Number
           <Input
-            onChange={this.handleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            id={nanoid()}
+            onChange={this.handleChange}
           />
         </Label>
         <AddBtn type="submit">Add contact</AddBtn>
